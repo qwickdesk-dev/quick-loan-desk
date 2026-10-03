@@ -4,263 +4,173 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quick Loan Desk | Instant Business & Home Loans</title>
-    <style>
-        :root {
-            --primary: #0f172a;
-            --accent: #2563eb;
-            --accent-hover: #1d4ed8;
-            --success: #16a34a;
-            --bg-light: #f8fafc;
-            --text-main: #334155;
-            --text-muted: #64748b;
-            --border: #cbd5e1;
-        }
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', system-ui, -apple-system, sans-serif; }
-        body { background-color: var(--bg-light); color: var(--text-main); line-height: 1.5; padding: 0; }
-        
-        /* Header / Navbar */
-        header { background: #ffffff; border-bottom: 1px solid var(--border); padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
-        .logo { font-size: 20px; font-weight: 800; color: var(--primary); text-decoration: none; display: flex; align-items: center; gap: 8px; }
-        .logo span { color: var(--accent); }
-        .helpline { font-size: 13px; color: var(--text-muted); font-weight: 600; }
-
-        /* Main Container Layout */
-        .main-container { max-width: 1100px; margin: 30px auto; padding: 0 20px; display: grid; grid-template-columns: 1.2fr 1fr; gap: 40px; align-items: center; }
-        @media(max-width: 768px) { .main-container { grid-template-columns: 1fr; margin: 15px auto; gap: 20px; } }
-
-        /* Hero / Banner Section */
-        .hero-content h1 { font-size: 32px; font-weight: 800; color: var(--primary); margin-bottom: 15px; line-height: 1.2; }
-        .hero-content h1 span { color: var(--accent); }
-        .hero-content p { font-size: 15px; color: var(--text-muted); margin-bottom: 25px; }
-        
-        /* Dynamic Banner / Fallback Box */
-        .banner-container { width: 100%; height: 180px; background: linear-gradient(135deg, #1e293b, #0f172a); border-radius: 12px; display: flex; flex-direction: column; justify-content: center; align-items: center; color: #fff; text-align: center; padding: 20px; margin-bottom: 25px; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
-        .banner-container h3 { font-size: 18px; margin-bottom: 5px; color: #60a5fa; }
-        .banner-container p { font-size: 12px; color: #94a3b8; margin: 0; }
-        .banner-container img { width: 100%; height: 100%; object-fit: cover; border-radius: 10px; display: none; }
-
-        .features-list { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
-        .feature-item { font-size: 13px; font-weight: 600; color: var(--primary); display: flex; align-items: center; gap: 8px; }
-        .feature-item::before { content: "✔"; color: var(--success); font-weight: bold; }
-
-        /* Card Form Section */
-        .form-card { background: #ffffff; padding: 30px; border-radius: 16px; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08); border: 1px solid var(--border); }
-        .form-card h2 { font-size: 20px; font-weight: 700; color: var(--primary); margin-bottom: 8px; }
-        .form-card p.sub-text { font-size: 13px; color: var(--text-muted); margin-bottom: 20px; }
-
-        .form-group { margin-bottom: 15px; }
-        label { display: block; font-size: 12px; font-weight: 700; color: var(--primary); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
-        input, select { width: 100%; padding: 12px 14px; border: 1px solid var(--border); border-radius: 8px; font-size: 14px; background: #fff; transition: all 0.3s; }
-        input:focus, select:focus { border-color: var(--accent); outline: none; box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); }
-
-        /* Consent Checkbox for DPDP Act Compliance */
-        .consent-box { display: flex; align-items: flex-start; gap: 10px; margin: 18px 0; font-size: 11px; color: var(--text-muted); line-height: 1.4; }
-        .consent-box input { width: 16px; height: 16px; margin-top: 2px; accent-color: var(--accent); }
-
-        /* Action Buttons */
-        .btn-group { display: flex; flex-direction: column; gap: 10px; }
-        .btn { width: 100%; padding: 14px; border: none; border-radius: 8px; font-size: 15px; font-weight: 700; cursor: pointer; transition: all 0.3s; display: flex; justify-content: center; align-items: center; gap: 8px; text-align: center; }
-        .btn-cibil { background: #0f172a; color: #fff; }
-        .btn-cibil:hover { background: #1e293b; }
-        .btn-apply { background: var(--accent); color: #fff; }
-        .btn-apply:hover { background: var(--accent-hover); }
-
-        /* Alert / Status Message */
-        #alertMsg { display: none; padding: 12px; border-radius: 8px; font-size: 13px; margin-bottom: 15px; text-align: center; font-weight: 600; }
-        .alert-error { background: #fee2e2; color: #b91c1c; border: 1px solid #f87171; }
-
-        /* Footer Compliance & Disclaimer */
-        footer { background: #0f172a; color: #94a3b8; padding: 30px 20px; margin-top: 50px; font-size: 12px; }
-        .footer-content { max-width: 1100px; margin: 0 auto; text-align: center; line-height: 1.6; }
-        .footer-content p.disclaimer { font-size: 11px; color: #64748b; margin-top: 10px; border-top: 1px solid #1e293b; padding-top: 15px; }
-        .footer-links { margin-top: 15px; display: flex; justify-content: center; gap: 20px; }
-        .footer-links a { color: #94a3b8; text-decoration: none; }
-        .footer-links a:hover { color: #fff; text-decoration: underline; }
-    </style>
+    <!-- External Modular CSS Link -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <header>
-        <a href="#" class="logo">Quick<span>Loan Desk</span></a>
-        <div class="helpline">Helpline: WhatsApp Support Active</div>
+    <!-- Header Navigation -->
+    <header class="site-header">
+        <div class="header-container">
+            <a href="index.html" class="logo">Quick<span>Loan Desk</span></a>
+            <div class="helpline-badge">
+                <span>🔒 Secure 256-Bit Encryption</span>
+                <span class="divider">|</span>
+                <span>WhatsApp Support Active</span>
+            </div>
+        </div>
     </header>
 
-    <div class="main-container">
-        <!-- Left Hero Section -->
-        <div class="hero-content">
-            <!-- Dynamic / Fallback Banner Slot -->
-            <div class="banner-container" id="bannerBox">
-                <h3>Quick Loan Desk Partner Network</h3>
-                <p>Fast Approvals • 40+ Banking Partners • Zero Hidden Charges</p>
-                <img id="dynamicBanner" src="" alt="Promotional Banner">
-            </div>
-
-            <h1>Get Instant <span>Business & Home Loans</span> With 40+ Partner Banks</h1>
-            <p>Authorized Channel Partner (DSA) assisting you from documentation to final disbursal with complete transparency.</p>
+    <!-- Main Hero & Form Section -->
+    <main class="main-wrapper">
+        
+        <!-- Left Column: Value Proposition & Dynamic Banner -->
+        <div class="hero-section">
             
-            <div class="features-list">
-                <div class="feature-item">Lowest Interest Rates</div>
-                <div class="feature-item">Free CIBIL Score Check</div>
-                <div class="feature-item">Doorstep Documentation</div>
-                <div class="feature-item">Direct Bank Disbursal</div>
+            <!-- Dynamic Banner Slot (Managed via Admin Panel & Cloudinary) -->
+            <div class="banner-box" id="bannerContainer">
+                <div class="banner-fallback">
+                    <h3>Quick Loan Desk Partner Network</h3>
+                    <p>Fast Approvals • 40+ Banking Partners • Zero Upfront Fees</p>
+                </div>
+                <img id="liveDynamicBanner" src="" alt="Promotional Banner" style="display: none;">
+            </div>
+
+            <div class="hero-content">
+                <h1>Get Instant <span>Business & Home Loans</span> With 40+ Partner Banks</h1>
+                <p>Authorized Channel Partner (DSA) assisting you seamlessly from initial documentation to final bank disbursal with complete transparency and zero hidden charges.</p>
+                
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="icon">📉</div>
+                        <div>
+                            <h4>Lowest Interest Rates</h4>
+                            <p>Compared across top banks and NBFCs</p>
+                        </div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="icon">📊</div>
+                        <div>
+                            <h4>Free CIBIL Report</h4>
+                            <p>Instant bureau score evaluation</p>
+                        </div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="icon">🏠</div>
+                        <div>
+                            <h4>Doorstep Assistance</h4>
+                            <p>End-to-end paperwork support</p>
+                        </div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="icon">⚡</div>
+                        <div>
+                            <h4>Fast Disbursal</h4>
+                            <p>Direct bank-to-account transfer</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="trust-strip">
+                    <span>Trusted by 10,000+ Borrowers</span>
+                    <span class="dot">•</span>
+                    <span>RBI Regulated Lenders Only</span>
+                </div>
             </div>
         </div>
 
-        <!-- Right Form Section -->
-        <div class="form-card">
-            <h2>Check Eligibility & Apply</h2>
-            <p class="sub-text">Enter your details to proceed securely.</p>
-
-            <div id="alertMsg"></div>
-
-            <form id="leadForm">
-                <div class="form-group">
-                    <label for="fullName">Full Name (As per PAN)</label>
-                    <input type="text" id="fullName" required placeholder="Enter your full name">
+        <!-- Right Column: High-Conversion Lead Form Card -->
+        <div class="form-container">
+            <div class="form-card">
+                <div class="form-header">
+                    <h2>Check Eligibility & Apply</h2>
+                    <p>Fill in your credentials to connect with our lending partners instantly.</p>
                 </div>
 
-                <div class="form-group">
-                    <label for="whatsappNo">WhatsApp Mobile Number</label>
-                    <input type="tel" id="whatsappNo" required pattern="[0-9]{10}" maxlength="10" placeholder="10-digit mobile number">
-                </div>
+                <!-- Alert Feedback Box -->
+                <div id="formAlertMessage" class="alert-box" style="display: none;"></div>
 
-                <div class="form-group">
-                    <label for="loanCategory">Select Requirement</label>
-                    <select id="loanCategory" required>
-                        <option value="" disabled selected>Choose Loan Type</option>
-                        <option value="Business Loan">Business Loan</option>
-                        <option value="Home Loan">Home Loan</option>
-                    </select>
-                </div>
+                <form id="leadCaptureForm" novalidate>
+                    <div class="input-group">
+                        <label for="fullName">Full Name (As per PAN Card) *</label>
+                        <input type="text" id="fullName" required placeholder="e.g. Rahul Sharma" autocomplete="name">
+                    </div>
 
-                <!-- Mandatory DPDP Compliance Consent Checkbox -->
-                <div class="consent-box">
-                    <input type="checkbox" id="consentCheck" required>
-                    <label for="consentCheck" style="text-transform: none; font-weight: normal; font-size: 11px; display: inline;">
-                        I agree to the Terms & Privacy Policy and authorize Quick Loan Desk to contact me via Call/WhatsApp regarding loan offers.
-                    </label>
-                </div>
+                    <div class="input-group">
+                        <label for="whatsappNo">WhatsApp Mobile Number *</label>
+                        <div style="display: flex; gap: 8px;">
+                            <span style="display: flex; align-items: center; padding: 0 12px; background: #f1f5f9; border: 1px solid var(--border-color); border-radius: 8px; font-weight: 600; font-size: 14px;">+91</span>
+                            <input type="tel" id="whatsappNo" required pattern="[0-9]{10}" maxlength="10" placeholder="10-digit mobile number" autocomplete="tel">
+                        </div>
+                    </div>
 
-                <div class="btn-group">
-                    <button type="button" id="btnCibil" class="btn btn-cibil">Check Free CIBIL & Proceed</button>
-                    <button type="button" id="btnApply" class="btn btn-apply">Apply For Loan Directly</button>
-                </div>
-            </form>
+                    <div class="input-group">
+                        <label for="loanCategory">Select Loan Requirement *</label>
+                        <select id="loanCategory" required>
+                            <option value="" disabled selected>Choose your loan type</option>
+                            <option value="Business Loan">Business Loan (Working Capital / Expansion)</option>
+                            <option value="Home Loan">Home Loan (Purchase / Construction / Balance Transfer)</option>
+                        </select>
+                    </div>
+
+                    <!-- Mandatory DPDP & Legal Consent Checkbox -->
+                    <div class="consent-group">
+                        <input type="checkbox" id="legalConsent" required>
+                        <label for="legalConsent">
+                            I agree to the <a href="terms.html" target="_blank">Terms & Conditions</a> and <a href="privacy-policy.html" target="_blank">Privacy Policy</a>, and authorize Quick Loan Desk and its partners to contact me via Call/WhatsApp regarding loan offers and bureau checks.
+                        </label>
+                    </div>
+
+                    <!-- Dual Action Buttons -->
+                    <div class="cta-button-group">
+                        <button type="button" id="btnCheckCibil" class="btn btn-secondary">
+                            <span>🔍 Check Free CIBIL & Proceed</span>
+                        </button>
+                        <button type="button" id="btnDirectApply" class="btn btn-primary">
+                            <span>🚀 Apply For Loan Directly</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
-    </div>
 
-    <footer>
-        <div class="footer-content">
-            <p><strong>Quick Loan Desk</strong> is an authorized DSA / Channel Partner facilitating loans through tie-ups with leading Banks and NBFCs.</p>
-            <p class="disclaimer">
-                <strong>Legal Disclaimer:</strong> We do not lend money directly from our own funds. Loan sanctions and interest rates are strictly at the sole discretion of the respective lending partner banks based on credit evaluation. No upfront processing fees are charged by Quick Loan Desk.
-            </p>
-            <div class="footer-links">
-                <a href="privacy-policy.html">Privacy Policy</a>
-                <a href="terms.html">Terms & Conditions</a>
-                <a href="contact.html">Contact Us</a>
+    </main>
+
+    <!-- Professional Corporate Footer -->
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <h3>Quick<span>Loan Desk</span></h3>
+                    <p>Your trusted financial catalyst connecting you with India's leading scheduled commercial banks and authorized NBFC partners.</p>
+                </div>
+                <div class="footer-links-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                        <li><a href="terms.html">Terms & Conditions</a></li>
+                        <li><a href="contact.html">Support Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-disclaimer">
+                <p><strong>Regulatory & DSA Disclosure:</strong> Quick Loan Desk acts solely as an authorized Direct Selling Agent (DSA) / Channel Partner for financial institutions. We do not disburse loans directly from our proprietary funds. All loan sanctions, interest rates, tenures, and credit evaluations are at the absolute discretion of the partner lending banks in accordance with RBI guidelines. No upfront processing or consultation fees are solicited by our organization.</p>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 Quick Loan Desk. All Rights Reserved.</p>
+                <p>Designed for High-Speed Secure Performance</p>
             </div>
         </div>
     </footer>
 
-    <!-- Firebase & Core Logic -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
-        import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js";
-
-        // Firebase Configured Securely
-        const firebaseConfig = {
-            apiKey: "AIzaSyCeveAnUHz6X_0tj9mEegPAp0Tn6sJ9RPA",
-            authDomain: "quickloan-desk.firebaseapp.com",
-            projectId: "quickloan-desk",
-            storageBucket: "quickloan-desk.firebasestorage.app",
-            messagingSenderId: "573253537243",
-            appId: "1:573253537243:web:5a0325635c38a4369cebfe"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-
-        // OneAndro Permanent Master Links
-        const linkCibilCheck = "https://crm.oneandro.com/customer-service?d=c29mdF9jb2RlPVJLTUFITkEzNjA0OTQ0MCZjaGVja19zY29yZT10cnVlJnNjb3JlX3R5cGU9RXF1aWZheCZ0b2tlbl9rZXk9QVBKNTRwTXImbG9naW5faWQ9dW5kZWZpbmVkJnNoYXJlX2xlYWRfdHlwZT0yJnV0bV9zb3VyY2U9c2hhcmVfbGluaw%3D%3D";
-        const linkDirectApply = "https://crm.oneandro.com/customer-service?d=c29mdF9jb2RlPVJLTUFITkEzNjA0OTQ0MCZ0b2tlbl9rZXk9dlpjYkllaWQmbG9naW5faWQ9dW5kZWZpbmVkJnNoYXJlX2xlYWRfdHlwZT0xJnV0bV9zb3VyY2U9c2hhcmVfbGluaw%3D%3D";
-
-        const showAlert = (message) => {
-            const alertBox = document.getElementById("alertMsg");
-            alertBox.innerText = message;
-            alertBox.className = "alert-error";
-            alertBox.style.display = "block";
-            setTimeout(() => { alertBox.style.display = "none"; }, 5000);
-        };
-
-        // Handle Submission & Routing Function
-        async function handleSubmission(intentType, targetUrl) {
-            const name = document.getElementById("fullName").value.trim();
-            const whatsapp = document.getElementById("whatsappNo").value.trim();
-            const loanType = document.getElementById("loanCategory").value;
-            const consent = document.getElementById("consentCheck").checked;
-
-            if (!name || !whatsapp || !loanType) {
-                showAlert("Please fill in all required fields.");
-                return;
-            }
-
-            if (!/^[0-9]{10}$/.test(whatsapp)) {
-                showAlert("Please enter a valid 10-digit WhatsApp number.");
-                return;
-            }
-
-            if (!consent) {
-                showAlert("Please accept the terms and privacy consent to proceed.");
-                return;
-            }
-
-            // 24-Hour Spam Protection Check using LocalStorage
-            const lastSubmissionTime = localStorage.getItem("qld_sub_" + whatsapp);
-            const now = new Date().getTime();
-            
-            if (lastSubmissionTime && (now - lastSubmissionTime < 24 * 60 * 60 * 1000)) {
-                showAlert("You have already applied. Please try again after 24 hours.");
-                return;
-            }
-
-            // Disable buttons to avoid multiple clicks
-            document.getElementById("btnCibil").disabled = true;
-            document.getElementById("btnApply").disabled = true;
-
-            try {
-                // Save lead securely to Firebase Firestore
-                await addDoc(collection(db, "leads"), {
-                    fullName: name,
-                    whatsappNumber: whatsapp,
-                    loanType: loanType,
-                    intent: intentType,
-                    timestamp: serverTimestamp(),
-                    status: "New Lead"
-                });
-
-                // Set 24h lockout timestamp in browser storage
-                localStorage.setItem("qld_sub_" + whatsapp, now);
-
-                // Seamless Redirect to OneAndro Master Link
-                window.location.href = targetUrl;
-
-            } catch (error) {
-                console.error("Error saving lead: ", error);
-                showAlert("Network error. Please try again.");
-                document.getElementById("btnCibil").disabled = false;
-                document.getElementById("btnApply").disabled = false;
-            }
-        }
-
-        // Attach event listeners to respective CTA buttons
-        document.getElementById("btnCibil").addEventListener("click", () => {
-            handleSubmission("Check CIBIL Score", linkCibilCheck);
-        });
-
-        document.getElementById("btnApply").addEventListener("click", () => {
-            handleSubmission("Direct Loan Application", linkDirectApply);
-        });
-    </script>
+    <!-- Modular Script Imports -->
+    <script type="module" src="js/firebase-config.js"></script>
+    <script type="module" src="js/main.js"></script>
 </body>
 </html>
