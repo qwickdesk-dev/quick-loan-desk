@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login | Quick Loan Desk CRM</title>
+    <!-- Modular Admin CSS Link -->
+    <link rel="stylesheet" href="css/admin-style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body class="login-body">
+
+    <div class="login-card">
+        <a href="../index.html" class="logo">Quick<span>Loan Desk</span></a>
+        <p class="subtitle">Secure CRM Access Portal</p>
+
+        <div id="loginAlertBox" class="alert-box" style="display: none;"></div>
+
+        <form id="adminPinForm">
+            <div class="input-group">
+                <label for="adminPinInput">Enter 4-Digit Security PIN</label>
+                <input type="password" id="adminPinInput" maxlength="4" pattern="[0-9]{4}" required placeholder="••••" autocomplete="current-password" style="text-align: center; font-size: 24px; letter-spacing: 8px;">
+            </div>
+
+            <button type="submit" id="btnLoginSubmit" class="btn btn-primary" style="margin-top: 10px;">
+                <span>Unlock CRM Dashboard</span>
+            </button>
+        </form>
+
+        <div class="login-footer-note">
+            <p>Authorized Admin Personnel Only. All login attempts are monitored.</p>
+            <a href="../index.html">&larr; Return to Main Website</a>
+        </div>
+    </div>
+
+    <!-- Admin Login Logic Script -->
+    <script>
+        document.getElementById("adminPinForm").addEventListener("submit", function(e) {
+            e.preventDefault();
+            const enteredPin = document.getElementById("adminPinInput").value.trim();
+            const alertBox = document.getElementById("loginAlertBox");
+
+            // Correct 4-Digit PIN is 9577
+            if (enteredPin === "9577") {
+                // Set secure local storage session flag
+                localStorage.setItem("qld_admin_authenticated", "true");
+                
+                // Redirect immediately to dashboard
+                window.location.href = "dashboard.html";
+            } else {
+                alertBox.innerText = "❌ Incorrect Security PIN. Access Denied.";
+                alertBox.style.display = "block";
+                document.getElementById("adminPinInput").value = "";
+                
+                setTimeout(() => {
+                    alertBox.style.display = "none";
+                }, 4000);
+            }
+        });
+    </script>
+</body>
+</html>
